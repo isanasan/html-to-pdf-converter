@@ -1,1 +1,1 @@
-export { default as hello } from './hello';
+export { default as html_to_pdf } from './html-to-pdf';

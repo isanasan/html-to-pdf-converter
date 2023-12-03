@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import html_to_pdf from '@functions/html-to-pdf';
 
 const outputBucketName = "${sls:stage}-generated-pdf";
 
@@ -44,7 +44,7 @@ const serverlessConfiguration: AWS = {
     ],
   },
   // import the function via paths
-  functions: { hello },
+  functions: { html_to_pdf },
   package: { individually: true },
   custom: {
     esbuild: {
