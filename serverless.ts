@@ -7,6 +7,10 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: '3',
   plugins: ['serverless-esbuild'],
   provider: {
+    deploymentBucket: {
+      name: "${sls:stage}-serverless-framework-deploy-bucket",
+      maxPreviousDeploymentArtifacts: 3,
+    },
     name: 'aws',
     runtime: 'nodejs18.x',
     region: "ap-northeast-1",
