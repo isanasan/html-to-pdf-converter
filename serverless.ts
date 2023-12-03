@@ -2,10 +2,22 @@ import type { AWS } from '@serverless/typescript';
 
 import hello from '@functions/hello';
 
+const outputBucketName = "${sls:stage}-generated-pdf";
+
 const serverlessConfiguration: AWS = {
   service: 'html-to-pdf-converter',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild'],
+  resources: {
+    Resources: {
+      Bucket: {
+        Type: "AWS::S3::Bucket",
+        Properties: {
+          BucketName: outputBucketName,
+        },
+      },
+    },
+  },
   provider: {
     deploymentBucket: {
       name: "${sls:stage}-serverless-framework-deploy-bucket",
@@ -21,7 +33,15 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      BUCKET_NAME: outputBucketName,
     },
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: ["s3:PutObject"],
+        Resource: ['arn:aws:s3:::"${sls:stage}"-generated-pdf/*'],
+      },
+    ],
   },
   // import the function via paths
   functions: { hello },
