@@ -39,7 +39,7 @@ const serverlessConfiguration: AWS = {
       {
         Effect: "Allow",
         Action: ["s3:PutObject"],
-        Resource: ['arn:aws:s3:::"${sls:stage}"-generated-pdf/*'],
+        Resource: ['arn:aws:s3:::dev-generated-pdf/*'],
       },
     ],
   },
