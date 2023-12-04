@@ -34,12 +34,13 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       BUCKET_NAME: outputBucketName,
+      BUCKET_ARN: "${sls:stage}-generated-pdf-bucket"
     },
     iamRoleStatements: [
       {
         Effect: "Allow",
         Action: ["s3:PutObject"],
-        Resource: ['arn:aws:s3:::dev-generated-pdf/*'],
+        Resource: ["${sls:stage}-generated-pdf-bucket"],
       },
     ],
   },
